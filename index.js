@@ -17,7 +17,6 @@ app.get('/', (req, res) => {
 
 const PORT = 4000;
 app.use('/api/user', userRouter);
-app.use('/api/budgetEntry', budgetEntry);
 
 app.listen(PORT, ()=> {
   console.log(`PORT ${PORT} IS ON`);

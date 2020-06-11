@@ -1,6 +1,6 @@
 const database = require('./database')
 
-db.serialize(() => {
+database.serialize(() => {
   const dropTableUser = `DROP TABLE user`
   const dropTableInfo = `DROP TABLE info`
   const createTableUser = `CREATE TABLE IF NOT EXISTS user (username TEXT UNIQUE, email TEXT UNIQUE, password TEXT)`
