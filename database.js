@@ -24,29 +24,29 @@ let database = new sqlite3.Database('./database.db');
 //     wall_id INTEGER
 //   )`
 
-//   database.run(dropTableUser, (error => {
-//     if (error) {
-//       console.error(new Error('Failure to drop table user'));
-//     } else {
-//       console.log('dropped user table successfully');
-//     }
-//   }));
+//   // database.run(dropTableUser, (error => {
+//   //   if (error) {
+//   //     console.error(new Error('Failure to drop table user'));
+//   //   } else {
+//   //     console.log('dropped user table successfully');
+//   //   }
+//   // }));
 
-//   database.run(dropTableWall, (error => {
-//     if (error) {
-//       console.error(new Error('Failure to drop table wall'));
-//     } else {
-//       console.log('dropped wall table successfully');
-//     }
-//   }));
+//   // database.run(dropTableWall, (error => {
+//   //   if (error) {
+//   //     console.error(new Error('Failure to drop table wall'));
+//   //   } else {
+//   //     console.log('dropped wall table successfully');
+//   //   }
+//   // }));
 
-//   database.run(dropTableUserWallPost, (error => {
-//     if (error) {
-//       console.error(new Error('Failure to drop user wall post table'));
-//     } else {
-//       console.log('dropped user wall post table successfully');
-//     }
-//   }));
+//   // database.run(dropTableUserWallPost, (error => {
+//   //   if (error) {
+//   //     console.error(new Error('Failure to drop user wall post table'));
+//   //   } else {
+//   //     console.log('dropped user wall post table successfully');
+//   //   }
+//   // }));
 
 //   database.run(createTableUser, (error => {
 //     if (error) {
