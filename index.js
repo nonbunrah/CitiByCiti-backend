@@ -100,6 +100,79 @@ app.delete('/api/users/:id', (req, res) => {
   })
 });
 
+// -------------------------------------------------------
+// WALL ROUTES
+// -------------------------------------------------------
+
+// get all wallposts
+app.get('/api/wallposts', (req, res) => {
+  const getWall = `SELECT oid, * FROM tblWall`;
+
+  database.all(getWall, (error, results) => {
+    if (error) {
+      console.log(new Error('Could not get wallposts'), error);
+      res.sendStatus(500);
+    }
+    res.status(200).json(results);
+  })
+});
+
+//get post by date
+app.get('/api/wallposts/:month/:day/:year', (req, res) => {
+  const getPost = `
+  SELECT oid, * from tblWall
+  WHERE tblWall.month = ${req.params.month}
+  AND tblWall.day = ${req.params.day}
+  AND tblWall.year = ${req.params.year}`;
+
+  database.all(getPost, (error, results) => {
+    if (error) {
+      console.log(new Error('Could not get wallpost(s)'), error);
+      res.sendStatus(500);
+    }
+    res.status(200).json(results);
+  })
+});
+
+// get one wallpost
+app.get('/api/wallposts/:id', (req, res) => {
+  const postId = req.params.id;
+  const getPost = `SELECT oid, * FROM tblWall WHERE tblWall.oid = ?`;
+
+  database.get(getPost, [postId], (error, results) => {
+    if (error) {
+      console.log(new Error('Could not get wallpost'), error);
+      res.sendStatus(500);
+    }
+    res.status(200).json(results);
+  })
+});
+
+// create wallpost
+app.post('/api/wallposts', (req, res) => {
+  const reqBody = [req.body.title, req.body.description, req.body.time, req.body.month, req.body.day, req.body.year];
+  const createNewPost = `INSERT INTO tblWall VALUES (?, ?, ?, ?, ?, ?)`;
+
+  database.run(createNewPost, reqBody, (error, results) => {
+    if (error) {
+      console.log(`Error adding new post: ${req.body}`, error)
+      res.sendStatus(500);
+    } else {
+      console.log(`Added new event: ${req.body.title}`)
+      res.sendStatus(200);
+    }
+  })
+});
+
+// update wallpost
+app.put('/api/wallposts/:id', (req, res) => {
+  const postId = parseInt(req.params.id);
+  const queryHelper = Object.keys(req.body).map(element => `${element.toUpperCase() } = ?`);
+  const updateOnePost = `UPDATE tblWall SET ${queryHelper.join(', ')} WHERE tblWall.oid = ?`;
+  const queryValues = [...Object.values(req.body), postId];
+  
+})
+
 // Start server
 app.listen(PORT, ()=> {
   console.log(`PORT ${PORT} IS ON`);
