@@ -39,15 +39,15 @@ app.get('/api/users', (req, res) => {
 app.get('/api/user/:id', (req, res) => {
   const userId = req.params.id;
   const getUser = 
-  `SELECT oid, * FROM tblUser WHERE tblUser.oid = ?`
+  `SELECT oid, * FROM tblUser WHERE tblUser.oid = ?`;
 
-  database.get(getUser), [userId], (error, results) => {
+  database.get(getUser, [userId], (error, results) => {
     if (error) {
       console.log(new Error('Could not get user'), error);
       res.sendStatus(500);
     }
     res.status(200).json(results);
-  }
+  })
 });
 
 // Start server
