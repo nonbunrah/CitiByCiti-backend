@@ -170,8 +170,33 @@ app.put('/api/wallposts/:id', (req, res) => {
   const queryHelper = Object.keys(req.body).map(element => `${element.toUpperCase() } = ?`);
   const updateOnePost = `UPDATE tblWall SET ${queryHelper.join(', ')} WHERE tblWall.oid = ?`;
   const queryValues = [...Object.values(req.body), postId];
-  
+
+  database.run(updateOnePost, queryValues, function (error) {
+    if (error) {
+      console.log(new Error('Could not update post'), error);
+      res.sendStatus(500);
+    } else {
+      console.log(`Post '${req.body.title}' successfully updated`);
+      res.sendStatus(200);
+    }
+  })
 })
+
+// delete wallpost
+app.delete('/api/wallposts/:id', (req, res) => {
+  const postId = req.params.id;
+  const getPost = `DELETE FROM tblWall WHERE tblWall.oid = ?`;
+
+  database.all(getPost, [postId], (error, results) => {
+    if (error) {
+      console.log(new Error('Could not delete post'), error);
+      res.sendStatus(500);
+    } else {
+      console.log('Post successfully deleted')
+      res.status(200).json({message: "Delete successful"});
+    }
+  })
+});
 
 // Start server
 app.listen(PORT, ()=> {
