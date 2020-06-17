@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 // -------------------------------------------------------
 
 // Get all users
-app.get('/api/user', (req, res) => {
+app.get('/api/users', (req, res) => {
   const getUsers = `SELECT oid, * FROM tblUser`;
 
   database.all(getUsers, (error, results) => {
@@ -34,6 +34,21 @@ app.get('/api/user', (req, res) => {
     res.status(200).json(results);
   })
 })
+
+// Get one user
+app.get('/api/user/:id', (req, res) => {
+  const userId = req.params.id;
+  const getUser = 
+  `SELECT oid, * FROM tblUser WHERE tblUser.oid = ?`
+
+  database.get(getUser), [userId], (error, results) => {
+    if (error) {
+      console.log(new Error('Could not get user'), error);
+      res.sendStatus(500);
+    }
+    res.status(200).json(results);
+  }
+});
 
 // Start server
 app.listen(PORT, ()=> {
